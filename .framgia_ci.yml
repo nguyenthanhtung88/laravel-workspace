@@ -1,0 +1,21 @@
+commands:
+  - ls -alh
+  - cp .env.testing.example .env
+  - phpmetrics --report-html=reports/metrics.html
+      --report-xml=reports/metrics.xml
+      app
+  - pdepend --summary-xml=reports/pdepend.xml
+      --jdepend-chart=reports/pdepend.svg
+      --overview-pyramid=reports/pyramid.svg
+      app
+  - phpcpd --log-pmd=reports/phpcpd.xml app
+  - phpmd app xml codesize --reportfile reports/phpmd.xml
+  - phpcs --standard=Framgia --report-xml=reports/phpcs.xml app
+  - eslint --format=checkstyle
+      --output-file=reports/eslint.xml
+      resources/assets/js/
+  - sleep 30
+  - php artisan migrate --database=mysql_test
+  - php -dzend_extension=xdebug.so vendor/bin/phpunit
+          --coverage-clover=reports/coverage-clover.xml
+          --coverage-html=reports/coverage

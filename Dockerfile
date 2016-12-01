@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install -y --force-yes \
         php7.0-fpm \
         php7.0-xdebug \
         php-dev \
+        php-yaml \
         libcurl4-openssl-dev \
         libedit-dev \
         libssl-dev \
@@ -61,10 +62,6 @@ RUN echo "export PATH=${PATH}:/var/www/laravel/vendor/bin:/root/.composer/vendor
 
 # Load xdebug Zend extension with phpunit command
 RUN echo "alias phpunit='php -dzend_extension=xdebug.so /var/www/laravel/vendor/bin/phpunit'" >> ~/.bashrc
-
-# Install mongodb extension
-RUN pecl install mongodb
-RUN echo "extension=mongodb.so" >> /etc/php/7.0/cli/php.ini
 
 # Install Nodejs
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
@@ -96,5 +93,9 @@ RUN ln -s /root/.composer/vendor/bin/phpcs /usr/bin/phpcs \
 
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+COPY violations.php /scripts/violations.php
+COPY violations.php /usr/local/bin/violations
+RUN chmod 755 /usr/local/bin/violations
 
 WORKDIR /var/www/laravel
