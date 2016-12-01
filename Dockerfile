@@ -94,7 +94,6 @@ RUN ln -s /root/.composer/vendor/bin/phpcs /usr/bin/phpcs \
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY violations.php /scripts/violations.php
 COPY violations.php /usr/local/bin/violations
 RUN chmod 755 /usr/local/bin/violations
 

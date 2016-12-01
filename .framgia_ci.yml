@@ -1,5 +1,4 @@
 commands:
-  - ls -alh
   - cp .env.testing.example .env
   - phpmetrics --report-html=reports/metrics.html
       --report-xml=reports/metrics.xml
